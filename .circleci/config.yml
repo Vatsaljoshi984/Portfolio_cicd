@@ -1,21 +1,34 @@
 version: 2.1
 
 jobs:
-  build:
+  deploy_backend:
     docker:
-      - image: circleci/python:3.8
-
+      - image: circleci/node:latest
+    resource_class: medium
     steps:
-      - checkout  # This step checks out your repository
-
-      # Update the repository
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:2Mf6r10u4sI878EMHKCdVNdaOvjt5dWTwcY62fkJcyo"
+      - checkout
       - run:
-          name: Update Repository
-          command: git pull origin master  # Replace 'master' with your branch name if different
+          name: Deploy Backend
+          command: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ubuntu@13.236.248.5 \
+                "cd /var/www/html/big_picture_back && \
+                 sudo git pull 
+               
+
 
 workflows:
   version: 2
-  build:
+  build_and_deploy:
     jobs:
-      - build
+      - deploy_backend:
+          filters:
+            branches:
+              only:
+                - updated-develop
+      - restart_pm2:
+          requires:
+            - deploy_backend
 
