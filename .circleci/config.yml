@@ -1,1 +1,21 @@
-test 
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout  # This step checks out your repository
+
+      # Update the repository
+      - run:
+          name: Update Repository
+          command: git pull origin master  # Replace 'master' with your branch name if different
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+
