@@ -8,14 +8,14 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:2Mf6r10u4sI878EMHKCdVNdaOvjt5dWTwcY62fkJcyo"
+            - "SHA256:GcXu16ZZ8yRouRXkOnRJwlamyW0K9F6sD4Znmw7Piwk"
       - checkout
       - run:
           name: Deploy Backend
           command: |
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ubuntu@13.236.248.5 \
-                "cd /var/www/html/big_picture_back && \
-                 sudo git pull 
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ubuntu@51.21.128.145 \
+                "cd /var/www/html/portfolio && \
+                 sudo git pull origin main
                
 
 
@@ -27,8 +27,6 @@ workflows:
           filters:
             branches:
               only:
-                - updated-develop
-      - restart_pm2:
-          requires:
-            - deploy_backend
+                - main
+      
 
