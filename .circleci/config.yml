@@ -13,11 +13,9 @@ jobs:
       - run:
           name: Deploy Backend
           command: |
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ubuntu@51.21.128.145 \
-                "cd /var/www/html/portfolio && \
-                 sudo git pull origin main
-               
-
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ~/.ssh/id_rsa ubuntu@51.21.128.145 \
+              "cd /var/www/html/portfolio && \
+              sudo git pull origin main"
 
 workflows:
   version: 2
@@ -28,5 +26,3 @@ workflows:
             branches:
               only:
                 - main
-      
-
